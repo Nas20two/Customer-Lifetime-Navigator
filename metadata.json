@@ -1,0 +1,5 @@
+{
+  "name": "Customer Lifetime Navigator",
+  "description": "An interactive dashboard for tracking customer journeys, predicting churn, and visualizing lifetime value segments.",
+  "requestFramePermissions": []
+}
