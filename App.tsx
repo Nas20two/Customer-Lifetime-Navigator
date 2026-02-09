@@ -8,8 +8,6 @@ import JourneysSankey from "./components/dashboard/JourneysSankey";
 import SegmentList from "./components/dashboard/SegmentList";
 import UnitEconomicsGrid from "./components/dashboard/UnitEconomicsGrid";
 import ChurnMetricsCalculator from "./components/dashboard/ChurnMetricsCalculator";
-import CustomerDetailView from "./components/dashboard/CustomerDetailView"; // ← NEW
-import { generateCustomersForSegment } from "./utils/generateCustomers"; // ← NEW
 import { CustomerSegment } from "./types";
 import { Sparkles, TrendingUp, RefreshCw } from "lucide-react";
 import { simulateNewData } from "./utils/simulationEngine";
@@ -20,7 +18,6 @@ function App() {
   const [data, setData] = useState(initialData);
   const [isSimulating, setIsSimulating] = useState(false);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
-  const [showCustomerDetail, setShowCustomerDetail] = useState(false); // ← NEW
 
   const { segments, journeys, churnSeries, ltvSeries, recommendations, snapshots } = data;
 
@@ -149,15 +146,6 @@ function App() {
               selectedSegmentId={selectedSegmentId}
               onSelect={setSelectedSegmentId}
             />
-            {/* ← NEW BUTTON BELOW */}
-            {selectedSegment && (
-              <button
-                onClick={() => setShowCustomerDetail(true)}
-                className="mt-3 w-full px-4 py-2 bg-indigo-600/20 hover:bg-indigo-600/30 border border-indigo-500/30 rounded-lg text-sm font-medium text-indigo-300 transition-colors"
-              >
-                View {selectedSegment.totalCustomers.toLocaleString()} Customers →
-              </button>
-            )}
           </section>
 
           {/* Main Dashboard Grid */}
@@ -192,16 +180,6 @@ function App() {
 
         </div>
       </main>
-
-      {/* ← NEW MODAL BELOW */}
-      {showCustomerDetail && selectedSegment && (
-        <CustomerDetailView
-          segmentId={selectedSegment.id}
-          segmentName={selectedSegment.name}
-          customers={generateCustomersForSegment(selectedSegment, 15)}
-          onClose={() => setShowCustomerDetail(false)}
-        />
-      )}
     </div>
   );
 }
