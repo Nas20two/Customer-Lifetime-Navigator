@@ -32,7 +32,7 @@ const SegmentList: React.FC<SegmentListProps> = ({ segments, selectedSegmentId, 
             <select
                 value={riskFilter}
                 onChange={(e) => setRiskFilter(e.target.value)}
-                className="appearance-none bg-slate-900/50 border border-white/10 hover:border-indigo-500/50 text-slate-300 text-xs font-medium rounded-xl py-2 pl-3 pr-8 focus:outline-none focus:ring-1 focus:ring-indigo-500 transition-all cursor-pointer"
+                className="appearance-none bg-slate-900 border border-indigo-500/20 hover:border-indigo-500/50 text-slate-300 text-xs font-medium rounded-lg py-2 pl-3 pr-8 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all cursor-pointer shadow-sm"
             >
                 <option value="all">Any Risk</option>
                 <option value="low">Low Risk</option>
@@ -47,7 +47,7 @@ const SegmentList: React.FC<SegmentListProps> = ({ segments, selectedSegmentId, 
             <select
                 value={sizeFilter}
                 onChange={(e) => setSizeFilter(e.target.value)}
-                className="appearance-none bg-slate-900/50 border border-white/10 hover:border-indigo-500/50 text-slate-300 text-xs font-medium rounded-xl py-2 pl-3 pr-8 focus:outline-none focus:ring-1 focus:ring-indigo-500 transition-all cursor-pointer"
+                className="appearance-none bg-slate-900 border border-indigo-500/20 hover:border-indigo-500/50 text-slate-300 text-xs font-medium rounded-lg py-2 pl-3 pr-8 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all cursor-pointer shadow-sm"
             >
                 <option value="all">Any Size</option>
                 <option value="Small">Small Org</option>
@@ -58,20 +58,20 @@ const SegmentList: React.FC<SegmentListProps> = ({ segments, selectedSegmentId, 
         </div>
 
         {/* Result Count Badge */}
-        <span className="ml-auto text-xs text-slate-500 font-mono bg-slate-900/30 px-2 py-1 rounded-lg border border-white/5">
+        <span className="ml-auto text-xs text-slate-500 font-mono bg-slate-900/50 px-2 py-1 rounded-md border border-white/5">
             {filteredSegments.length} matches
         </span>
       </div>
 
       {/* Filtered List */}
-      <div className="flex gap-4 overflow-x-auto pb-4 pt-2 px-1 snap-x no-scrollbar min-h-[200px]">
+      <div className="flex gap-4 overflow-x-auto pb-6 pt-2 px-1 snap-x no-scrollbar min-h-[200px]">
         {filteredSegments.length === 0 ? (
-            <div className="w-full flex flex-col items-center justify-center text-slate-500 border border-dashed border-white/10 rounded-3xl h-48 bg-slate-900/20">
+            <div className="w-full flex flex-col items-center justify-center text-slate-500 border-2 border-dashed border-slate-800 rounded-2xl h-48 bg-slate-900/20">
                 <Filter size={24} className="mb-2 opacity-50" />
                 <p className="text-sm">No segments match your filters</p>
                 <button 
                     onClick={() => { setRiskFilter('all'); setSizeFilter('all'); }}
-                    className="mt-3 text-xs text-indigo-400 hover:text-indigo-300 underline"
+                    className="mt-3 text-xs text-indigo-400 hover:text-indigo-300 underline font-medium"
                 >
                     Clear all filters
                 </button>
@@ -85,47 +85,47 @@ const SegmentList: React.FC<SegmentListProps> = ({ segments, selectedSegmentId, 
                     key={segment.id}
                     onClick={() => onSelect(segment.id)}
                     className={`
-                    relative flex-shrink-0 w-64 p-5 rounded-3xl border text-left transition-all duration-300 snap-start
+                    relative flex-shrink-0 w-64 p-5 rounded-2xl border text-left transition-all duration-300 snap-start
                     ${isSelected 
-                        ? 'bg-white/10 border-white/40 shadow-xl shadow-indigo-500/10 scale-[1.02]' 
-                        : 'bg-slate-900/40 border-white/5 hover:border-white/20 hover:bg-slate-800/40'
+                        ? 'bg-indigo-500/10 ring-2 ring-indigo-500/50 border-transparent shadow-xl shadow-indigo-900/20 scale-[1.02] z-10' 
+                        : 'bg-slate-900/40 border-slate-800 hover:border-indigo-500/30 hover:bg-slate-800/50'
                     }
                     `}
                 >
-                    <div className="flex items-start justify-between mb-3">
-                    <div className={`p-2 rounded-2xl ${isSelected ? 'bg-indigo-500/20 text-indigo-300' : 'bg-slate-800 text-slate-400'}`}>
-                        {segment.churnRisk === 'high' ? <AlertTriangle size={20} /> : <Users size={20} />}
-                    </div>
-                    <span className={`text-xs font-medium uppercase tracking-wider py-1 px-2 rounded-full border ${
-                        segment.churnRisk === 'low' ? 'border-emerald-500/30 text-emerald-400 bg-emerald-500/10' :
-                        segment.churnRisk === 'medium' ? 'border-amber-500/30 text-amber-400 bg-amber-500/10' :
-                        'border-red-500/30 text-red-400 bg-red-500/10'
-                    }`}>
-                        {segment.churnRisk} Risk
-                    </span>
+                    <div className="flex items-start justify-between mb-4">
+                        <div className={`p-2 rounded-lg ${isSelected ? 'bg-indigo-500/20 text-indigo-300' : 'bg-slate-800 text-slate-400'}`}>
+                            {segment.churnRisk === 'high' ? <AlertTriangle size={20} /> : <Users size={20} />}
+                        </div>
+                        <span className={`text-[10px] font-bold uppercase tracking-wider py-1 px-2 rounded-full border ${
+                            segment.churnRisk === 'low' ? 'border-emerald-500/30 text-emerald-400 bg-emerald-500/10' :
+                            segment.churnRisk === 'medium' ? 'border-amber-500/30 text-amber-400 bg-amber-500/10' :
+                            'border-red-500/30 text-red-400 bg-red-500/10'
+                        }`}>
+                            {segment.churnRisk} Risk
+                        </span>
                     </div>
                     
-                    <h3 className="text-lg font-semibold text-white mb-1">{segment.name}</h3>
-                    <p className="text-xs text-slate-400 mb-4 line-clamp-1">{segment.description}</p>
+                    <h3 className="text-lg font-bold text-white mb-1">{segment.name}</h3>
+                    <p className="text-xs text-slate-400 mb-4 line-clamp-2 h-8 leading-relaxed">{segment.description}</p>
                     
                     {/* Metrics Grid */}
-                    <div className="grid grid-cols-2 gap-y-3 gap-x-2 pt-4 border-t border-white/10">
+                    <div className="grid grid-cols-2 gap-y-3 gap-x-2 pt-4 border-t border-white/5">
                         <div>
-                            <p className="text-[10px] uppercase text-slate-500 tracking-wider">LTV</p>
-                            <p className="text-sm font-bold text-white">${segment.averageLifetimeValue}</p>
+                            <p className="text-[10px] uppercase text-slate-500 tracking-wider font-semibold">LTV</p>
+                            <p className="text-sm font-bold text-slate-200">${segment.averageLifetimeValue}</p>
                         </div>
                         <div>
-                            <p className="text-[10px] uppercase text-slate-500 tracking-wider">Size</p>
-                            <p className="text-sm font-bold text-white">{segment.totalCustomers.toLocaleString()}</p>
+                            <p className="text-[10px] uppercase text-slate-500 tracking-wider font-semibold">Size</p>
+                            <p className="text-sm font-bold text-slate-200">{segment.totalCustomers.toLocaleString()}</p>
                         </div>
                         
                         {/* New Metadata Display */}
-                        <div className="col-span-2 flex items-center gap-3 pt-2">
-                             <div className="flex items-center gap-1 text-[10px] text-slate-400 bg-slate-800/50 px-1.5 py-0.5 rounded border border-white/5">
+                        <div className="col-span-2 flex items-center gap-2 pt-1">
+                             <div className="flex items-center gap-1 text-[10px] text-slate-400 bg-slate-800 px-1.5 py-0.5 rounded border border-slate-700">
                                 <Building2 size={10} />
                                 {segment.orgSize}
                              </div>
-                             <div className="flex items-center gap-1 text-[10px] text-slate-400 bg-slate-800/50 px-1.5 py-0.5 rounded border border-white/5">
+                             <div className="flex items-center gap-1 text-[10px] text-slate-400 bg-slate-800 px-1.5 py-0.5 rounded border border-slate-700">
                                 <Globe2 size={10} />
                                 {segment.region}
                              </div>

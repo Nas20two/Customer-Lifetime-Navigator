@@ -20,8 +20,8 @@ const JourneysSnapshot: React.FC<JourneysSnapshotProps> = ({ snapshot }) => {
   if (!snapshot) return null;
 
   return (
-    <div className="bg-slate-900/50 rounded-3xl border border-white/5 p-6 backdrop-blur-sm flex flex-col h-full">
-      <h3 className="text-white font-semibold mb-4 flex items-center justify-between">
+    <div className="bg-slate-900/50 backdrop-blur-sm border border-indigo-500/20 rounded-2xl p-6 shadow-lg flex flex-col h-full">
+      <h3 className="text-white font-bold mb-4 flex items-center justify-between">
         <span>Recent Engagement</span>
         <Activity size={16} className="text-slate-500" />
       </h3>
@@ -31,12 +31,12 @@ const JourneysSnapshot: React.FC<JourneysSnapshotProps> = ({ snapshot }) => {
           <div key={tp.id} className="group">
             <div className="flex justify-between items-center mb-2">
               <div className="flex items-center gap-3">
-                <div className={`p-2 rounded-lg bg-slate-800 text-slate-400 group-hover:bg-slate-700 group-hover:text-white transition-colors`}>
+                <div className={`p-2 rounded-lg bg-slate-800 border border-slate-700 text-slate-400 group-hover:bg-indigo-500/20 group-hover:text-indigo-400 transition-colors`}>
                   {getIcon(tp.category)}
                 </div>
                 <div>
-                  <p className="text-sm text-slate-200 font-medium">{tp.name}</p>
-                  <p className="text-[10px] text-slate-500 uppercase">{tp.category}</p>
+                  <p className="text-sm text-slate-200 font-bold">{tp.name}</p>
+                  <p className="text-[10px] text-slate-500 uppercase font-medium">{tp.category}</p>
                 </div>
               </div>
               <span className="text-sm font-mono font-bold text-slate-300">{tp.engagementScore}</span>
@@ -56,7 +56,7 @@ const JourneysSnapshot: React.FC<JourneysSnapshotProps> = ({ snapshot }) => {
         ))}
       </div>
       
-      <button className="mt-auto pt-6 text-xs text-center text-slate-400 hover:text-white transition-colors w-full">
+      <button className="mt-auto pt-6 text-xs text-center text-slate-500 hover:text-indigo-400 font-medium transition-colors w-full">
         View full history
       </button>
     </div>

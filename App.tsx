@@ -92,7 +92,7 @@ function App() {
         <div className="relative z-10 flex flex-col h-full p-4 md:p-8">
           
           {/* Header */}
-          <header className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
+          <header className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 border-b border-white/5 pb-6">
             <div className="flex-1">
               <div className="flex items-center gap-2 text-xs uppercase tracking-[0.3em] text-indigo-400 font-semibold mb-2">
                 <Sparkles className="size-4" />
@@ -102,7 +102,7 @@ function App() {
                 Customer Lifetime Navigator
               </h1>
               <p className="text-slate-400 text-sm md:text-base leading-relaxed mt-2 max-w-2xl">
-                Track Unit Economics (LTV:CAC, ARPU) and visualize the customer journey to optimize for profitability and retention.
+                Track Unit Economics (LTV:CAC, ARPU) and visualize the customer journey to optimize for profitability.
               </p>
             </div>
 

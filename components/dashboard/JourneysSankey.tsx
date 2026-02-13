@@ -9,7 +9,7 @@ interface JourneysSankeyProps {
 const JourneysSankey: React.FC<JourneysSankeyProps> = ({ journey }) => {
   const [tooltip, setTooltip] = useState<{ x: number; y: number; data: any } | null>(null);
 
-  if (!journey) return <div className="h-64 flex items-center justify-center text-slate-500">No Journey Data</div>;
+  if (!journey) return <div className="h-64 flex items-center justify-center text-slate-500 bg-slate-900/50 rounded-2xl border border-indigo-500/20">No Journey Data</div>;
 
   const width = 800;
   const height = 240;
@@ -67,13 +67,13 @@ const JourneysSankey: React.FC<JourneysSankeyProps> = ({ journey }) => {
   }, [nodes]);
 
   return (
-    <div className="w-full bg-slate-900/50 rounded-3xl border border-white/5 p-6 backdrop-blur-sm relative group/container">
+    <div className="w-full bg-slate-900/50 backdrop-blur-sm border border-indigo-500/20 rounded-2xl p-6 shadow-lg relative group/container">
       <div className="flex justify-between items-center mb-6">
-        <h3 className="text-white font-semibold flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-indigo-500"></span>
+        <h3 className="text-white font-bold flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-indigo-500 shadow-[0_0_10px_#6366f1]"></span>
           Journey Flow
         </h3>
-        <span className="text-xs text-slate-400 bg-slate-800/50 px-2 py-1 rounded-lg border border-white/5">
+        <span className="text-xs text-slate-400 bg-slate-800 px-2 py-1 rounded-lg border border-slate-700 font-medium">
           Live View
         </span>
       </div>
@@ -84,8 +84,8 @@ const JourneysSankey: React.FC<JourneysSankeyProps> = ({ journey }) => {
             {/* Defs for gradients */}
             <defs>
                 <linearGradient id="linkGradient" gradientUnits="userSpaceOnUse">
-                <stop offset="0%" stopColor="#6366f1" stopOpacity="0.3" />
-                <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0.3" />
+                <stop offset="0%" stopColor="#6366f1" stopOpacity="0.2" />
+                <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0.2" />
                 </linearGradient>
             </defs>
 
@@ -98,7 +98,7 @@ const JourneysSankey: React.FC<JourneysSankeyProps> = ({ journey }) => {
                     fill="none" 
                     stroke="url(#linkGradient)" 
                     strokeWidth={Math.max(link.targetValue / 10, 2)} 
-                    className="transition-all duration-500"
+                    className="transition-all duration-500 hover:stroke-opacity-40"
                 />
                 
                 {/* Dropoff indicator on the link itself */}
@@ -108,7 +108,7 @@ const JourneysSankey: React.FC<JourneysSankeyProps> = ({ journey }) => {
                             x="-24" y="-11" 
                             width="48" height="22" 
                             rx="11" 
-                            className="fill-slate-950 stroke-red-500/20 stroke-1 shadow-sm" 
+                            className="fill-slate-900 stroke-red-500/50 stroke-1 shadow-sm" 
                         />
                         <text 
                             textAnchor="middle" 
@@ -137,26 +137,17 @@ const JourneysSankey: React.FC<JourneysSankeyProps> = ({ journey }) => {
                     width={nodeWidth}
                     height={node.h}
                     rx={12}
-                    className="fill-slate-800 stroke-indigo-500/30 stroke-1 transition-all duration-300 group-hover:fill-indigo-900/40 group-hover:stroke-indigo-400 group-hover:shadow-[0_0_15px_rgba(99,102,241,0.3)]"
+                    className="fill-slate-900 stroke-indigo-500/30 stroke-1 transition-all duration-300 group-hover:fill-indigo-900/30 group-hover:stroke-indigo-400 group-hover:shadow-[0_0_15px_rgba(99,102,241,0.2)]"
                 />
                 
                 {/* Label */}
                 <foreignObject x={node.x} y={node.y} width={nodeWidth} height={node.h}>
                     <div className="w-full h-full flex flex-col items-center justify-center pointer-events-none p-1">
-                    <span className="text-[10px] uppercase tracking-wider text-slate-400 mb-1 text-center leading-tight">{node.name}</span>
-                    <span className="text-sm font-bold text-white">{node.value}</span>
+                    <span className="text-[10px] uppercase tracking-wider text-slate-400 mb-1 text-center leading-tight font-semibold">{node.name}</span>
+                    <span className="text-sm font-extrabold text-white">{node.value}</span>
                     </div>
                 </foreignObject>
                 
-                {/* Hover Effect Line */}
-                <line 
-                    x1={node.x + 20} y1={node.y + 2} 
-                    x2={node.x + nodeWidth - 20} y2={node.y + 2} 
-                    stroke="#818cf8" 
-                    strokeWidth="2" 
-                    strokeLinecap="round" 
-                    className="opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                />
                 </g>
             ))}
             </svg>
@@ -164,15 +155,15 @@ const JourneysSankey: React.FC<JourneysSankeyProps> = ({ journey }) => {
             {/* Custom Tooltip Overlay */}
             {tooltip && (
                 <div 
-                    className="absolute z-50 pointer-events-none bg-slate-900/95 border border-white/10 rounded-xl p-3 shadow-2xl backdrop-blur-md w-48 transition-opacity duration-200 animate-in fade-in zoom-in-95"
+                    className="absolute z-50 pointer-events-none bg-slate-800 text-white rounded-xl p-3 shadow-xl w-48 transition-opacity duration-200 border border-slate-700 animate-in fade-in zoom-in-95"
                     style={{ 
                         left: tooltip.x, 
                         top: tooltip.y - 12, 
                         transform: 'translate(-50%, -100%)' 
                     }}
                 >
-                    <div className="flex items-center gap-2 mb-2 pb-2 border-b border-white/5">
-                        <div className="w-2 h-2 rounded-full bg-indigo-500"></div>
+                    <div className="flex items-center gap-2 mb-2 pb-2 border-b border-white/10">
+                        <div className="w-2 h-2 rounded-full bg-indigo-400"></div>
                         <span className="text-white font-bold text-sm">{tooltip.data.name}</span>
                     </div>
                     
@@ -190,7 +181,7 @@ const JourneysSankey: React.FC<JourneysSankeyProps> = ({ journey }) => {
                     </div>
                     
                     {/* Tiny arrow at bottom */}
-                    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-full w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[6px] border-t-slate-900/95"></div>
+                    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-full w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[6px] border-t-slate-800"></div>
                 </div>
             )}
         </div>

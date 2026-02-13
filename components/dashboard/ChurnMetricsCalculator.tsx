@@ -19,11 +19,9 @@ const ChurnMetricsCalculator: React.FC<ChurnMetricsCalculatorProps> = ({ segment
   const customerChurnRate = currentProbability;
 
   // 2. Gross MRR Churn Rate 
-  // For this model, we'll assume MRR churn tracks closely with Customer Churn for the segment
   const grossMrrChurnRate = currentProbability;
 
   // 3. Net MRR Churn Rate = (Churn MRR - Expansion MRR) / Total MRR
-  // expansionRate is stored in segment (e.g., 0.03 for 3%)
   const netMrrChurnRate = grossMrrChurnRate - segment.expansionRate;
 
   // Helper to format percentage
@@ -69,14 +67,14 @@ const ChurnMetricsCalculator: React.FC<ChurnMetricsCalculatorProps> = ({ segment
   const content = renderContent();
 
   return (
-    <div className="bg-slate-900/50 rounded-3xl border border-white/5 p-6 backdrop-blur-sm h-full flex flex-col">
-      <div className="flex items-center gap-2 mb-6">
-        <div className="p-2 bg-indigo-500/20 rounded-lg text-indigo-400">
+    <div className="bg-slate-900/50 backdrop-blur-sm border border-indigo-500/20 rounded-2xl p-6 shadow-lg h-full flex flex-col">
+      <div className="flex items-center gap-3 mb-6">
+        <div className="p-2 bg-indigo-500/10 border border-indigo-500/20 rounded-lg text-indigo-400">
             <Calculator size={18} />
         </div>
         <div>
-            <h3 className="text-white font-semibold">The Metrics for Churn</h3>
-            <p className="text-xs text-slate-400">Calculator & Definitions</p>
+            <h3 className="text-white font-bold">The Metrics for Churn</h3>
+            <p className="text-xs text-slate-400 font-medium">Calculator & Definitions</p>
         </div>
       </div>
 
@@ -85,23 +83,23 @@ const ChurnMetricsCalculator: React.FC<ChurnMetricsCalculatorProps> = ({ segment
         <select
             value={selectedMetric}
             onChange={(e) => setSelectedMetric(e.target.value as MetricType)}
-            className="w-full appearance-none bg-slate-800 border border-white/10 text-white text-sm rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer"
+            className="w-full appearance-none bg-slate-900 border border-indigo-500/20 text-slate-300 text-sm font-medium rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 hover:border-indigo-500/40 transition-colors cursor-pointer"
         >
             <option value="customer_churn">Customer Churn Rate</option>
             <option value="gross_mrr_churn">Gross MRR Churn Rate</option>
             <option value="net_mrr_churn">Net MRR Churn Rate</option>
         </select>
-        <ChevronDown size={16} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+        <ChevronDown size={16} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none" />
       </div>
 
       {/* Content Display */}
-      <div className="flex-1 flex flex-col justify-center bg-slate-950/50 rounded-2xl p-6 border border-white/5 relative overflow-hidden">
+      <div className="flex-1 flex flex-col justify-center bg-slate-800/30 rounded-xl p-6 border border-white/5 relative overflow-hidden">
         
-        <div className={`text-4xl font-bold mb-2 ${content.color}`}>
+        <div className={`text-4xl font-extrabold mb-2 ${content.color}`}>
             {content.value}
         </div>
         
-        <div className="text-xs font-mono text-slate-500 mb-4 bg-slate-900 inline-block px-2 py-1 rounded border border-white/5 self-start">
+        <div className="text-xs font-mono text-slate-400 mb-4 bg-slate-900 inline-block px-2 py-1 rounded border border-slate-700 self-start">
             Formula: {content.formula}
         </div>
 
@@ -110,7 +108,7 @@ const ChurnMetricsCalculator: React.FC<ChurnMetricsCalculatorProps> = ({ segment
         </p>
 
         {/* Status Indicator */}
-        <div className={`mt-4 flex items-center gap-2 text-xs font-bold uppercase tracking-wider ${content.isGood ? 'text-emerald-500' : 'text-amber-500'}`}>
+        <div className={`mt-4 flex items-center gap-2 text-xs font-bold uppercase tracking-wider ${content.isGood ? 'text-emerald-400' : 'text-amber-400'}`}>
             <Info size={14} />
             {content.isGood ? 'Healthy Metric' : 'Needs Attention'}
         </div>
