@@ -1,68 +1,38 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
-import { CustomerSegment, Recommendation } from "../types";
+import { CustomerSegment } from "../types";
 
-const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY || "");
+const API_URL = process.env.NODE_ENV === 'production' 
+  ? '/api/gemini-insights'
+  : 'http://localhost:3000/api/gemini-insights';
 
 export async function generateSegmentInsights(segment: CustomerSegment): Promise<{
   insight: string;
   recommendation: string;
   confidence: number;
 }> {
-  if (!import.meta.env.VITE_GEMINI_API_KEY) {
-    return {
-      insight: "Add your Gemini API key to see AI insights.",
-      recommendation: "Set VITE_GEMINI_API_KEY in your environment.",
-      confidence: 0,
-    };
-  }
-
-  const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-lite" });
-
-  const prompt = `
-Analyze this SaaS customer segment and provide ONE key insight and ONE actionable recommendation:
-
-Segment: ${segment.name}
-Description: ${segment.description}
-- Total Customers: ${segment.totalCustomers}
-- Average Lifetime Value: $${segment.averageLifetimeValue.toLocaleString()}
-- Customer Acquisition Cost: $${segment.cac.toLocaleString()}
-- Average Revenue Per User: $${segment.arpu.toLocaleString()}
-- Monthly Expansion Rate: ${segment.expansionRate}%
-- Churn Risk: ${segment.churnRisk}
-- Organization Size: ${segment.orgSize}
-- Region: ${segment.region}
-
-LTV:CAC Ratio: ${(segment.averageLifetimeValue / segment.cac).toFixed(2)}
-
-Provide your response in this exact format:
-INSIGHT: [One sentence observation about the segment's health]
-RECOMMENDATION: [One specific action to improve retention or profitability]
-CONFIDENCE: [High/Medium/Low based on data completeness]
-`;
-
   try {
-    const result = await model.generateContent(prompt);
-    const response = result.response.text();
+    const response = await fetch(API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ segment }),
+    });
 
-    // Parse the response
-    const insightMatch = response.match(/INSIGHT:\s*(.+)/i);
-    const recommendationMatch = response.match(/RECOMMENDATION:\s*(.+)/i);
-    const confidenceMatch = response.match(/CONFIDENCE:\s*(High|Medium|Low)/i);
+    if (!response.ok) {
+      throw new Error(`API error: ${response.status}`);
+    }
 
-    const confidence = confidenceMatch 
-      ? confidenceMatch[1] === "High" ? 0.9 : confidenceMatch[1] === "Medium" ? 0.7 : 0.5
-      : 0.7;
-
+    const data = await response.json();
     return {
-      insight: insightMatch?.[1]?.trim() || "No insight generated.",
-      recommendation: recommendationMatch?.[1]?.trim() || "No recommendation generated.",
-      confidence,
+      insight: data.insight,
+      recommendation: data.recommendation,
+      confidence: data.confidence,
     };
   } catch (error) {
-    console.error("Gemini API error:", error);
+    console.error("Failed to fetch AI insights:", error);
     return {
-      insight: "Unable to generate insights at this time.",
-      recommendation: "Check your API key or try again later.",
+      insight: "Unable to connect to AI service.",
+      recommendation: "Check your network connection or try again later.",
       confidence: 0,
     };
   }
