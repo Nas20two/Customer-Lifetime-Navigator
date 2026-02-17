@@ -1,4 +1,4 @@
-import React from 'react';
+import type { FC } from 'react';
 import { Recommendation } from '../../types';
 import { Sparkles, ArrowRight, Zap } from 'lucide-react';
 
@@ -6,7 +6,7 @@ interface RecommendationCardProps {
   recommendation?: Recommendation;
 }
 
-const RecommendationCard: React.FC<RecommendationCardProps> = ({ recommendation }) => {
+const RecommendationCard: FC<RecommendationCardProps> = ({ recommendation }) => {
   if (!recommendation) return null;
 
   return (

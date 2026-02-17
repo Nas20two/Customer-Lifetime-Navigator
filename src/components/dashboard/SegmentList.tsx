@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, type FC } from 'react';
 import { CustomerSegment } from '../../types';
 import { Users, AlertTriangle, Filter, Building2, Globe2 } from 'lucide-react';
 
@@ -8,7 +8,7 @@ interface SegmentListProps {
   onSelect: (id: string) => void;
 }
 
-const SegmentList: React.FC<SegmentListProps> = ({ segments, selectedSegmentId, onSelect }) => {
+const SegmentList: FC<SegmentListProps> = ({ segments, selectedSegmentId, onSelect }) => {
   const [riskFilter, setRiskFilter] = useState<string>('all');
   const [sizeFilter, setSizeFilter] = useState<string>('all');
 

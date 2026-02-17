@@ -1,4 +1,4 @@
-import React from 'react';
+import type { FC } from 'react';
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
 import { LTVSeries } from '../../types';
 import { TrendingUp } from 'lucide-react';
@@ -21,7 +21,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
   return null;
 };
 
-const LTVTrendChart: React.FC<LTVTrendChartProps> = ({ series }) => {
+const LTVTrendChart: FC<LTVTrendChartProps> = ({ series }) => {
   if (!series) return <div className="h-full flex items-center justify-center text-slate-500 bg-slate-900/50 rounded-2xl border border-indigo-500/20">No LTV Data</div>;
 
   const data = series.points;

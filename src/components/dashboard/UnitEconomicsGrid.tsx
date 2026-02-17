@@ -1,4 +1,4 @@
-import React from 'react';
+import type { FC } from 'react';
 import { CustomerSegment } from '../../types';
 import { Scale, DollarSign, Clock, Activity, HelpCircle } from 'lucide-react';
 
@@ -54,7 +54,7 @@ const MetricCard = ({
   );
 };
 
-const UnitEconomicsGrid: React.FC<UnitEconomicsGridProps> = ({ segment }) => {
+const UnitEconomicsGrid: FC<UnitEconomicsGridProps> = ({ segment }) => {
   const ltvCacRatio = segment.averageLifetimeValue / segment.cac;
   const paybackPeriod = segment.cac / segment.arpu;
 

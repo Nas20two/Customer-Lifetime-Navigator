@@ -1,4 +1,4 @@
-import React from 'react';
+import type { FC } from 'react';
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
 import { ChurnSeries } from '../../types';
 
@@ -20,7 +20,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
   return null;
 };
 
-const ChurnProbabilityChart: React.FC<ChurnProbabilityChartProps> = ({ series }) => {
+const ChurnProbabilityChart: FC<ChurnProbabilityChartProps> = ({ series }) => {
   if (!series) return <div className="h-48 flex items-center justify-center text-slate-500 bg-slate-900/50 rounded-2xl border border-indigo-500/20">No Churn Data</div>;
 
   const data = series.points;

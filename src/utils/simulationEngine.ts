@@ -1,4 +1,4 @@
-import { CustomerSegment, ChurnSeries, LTVSeries, JourneyFlow, Recommendation, JourneySnapshot, Touchpoint } from '../types';
+import { CustomerSegment, ChurnSeries, LTVSeries } from '../types';
 import { 
   segments as defaultSegments,
   journeys as defaultJourneys,
@@ -123,14 +123,6 @@ export const simulateNewData = () => {
     calculateMetrics(atRiskUsers, defaultSegments[1]),
     calculateMetrics(dormantUsers, defaultSegments[2]),
   ];
-
-  // Generate randomized trends for charts
-  const generateTrend = (baseValue: number, volatility: number) => {
-     return Array.from({ length: 6 }).map((_, i) => {
-         // Add some randomness
-         return Math.max(0, baseValue * (1 + (Math.random() * volatility - volatility/2)));
-     });
-  };
 
   const newChurnSeries: ChurnSeries[] = newSegments.map(seg => ({
     segmentId: seg.id,

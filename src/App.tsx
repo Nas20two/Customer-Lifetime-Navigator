@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { customerDashboardData as initialData } from "./mocks/customerData";
 import JourneysSnapshot from "./components/dashboard/JourneysSnapshot";
 import RecommendationCard from "./components/dashboard/RecommendationCard";
@@ -283,7 +283,9 @@ function App() {
 
             {/* Row 4: Churn Metrics Calculator */}
             <div className="lg:col-span-12">
-              <ChurnMetricsCalculator />
+              {selectedSegment && derived.churn && (
+                <ChurnMetricsCalculator segment={selectedSegment} churnSeries={derived.churn} />
+              )}
             </div>
           </div>
 

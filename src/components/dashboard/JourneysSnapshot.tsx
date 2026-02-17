@@ -1,5 +1,5 @@
-import React from 'react';
-import { JourneySnapshot } from '../../types';
+import type { FC } from 'react';
+import { JourneySnapshot, Touchpoint } from '../../types';
 import { Mail, Smartphone, Globe, Headphones, Activity } from 'lucide-react';
 
 interface JourneysSnapshotProps {
@@ -16,7 +16,7 @@ const getIcon = (category: string) => {
   }
 };
 
-const JourneysSnapshot: React.FC<JourneysSnapshotProps> = ({ snapshot }) => {
+const JourneysSnapshot: FC<JourneysSnapshotProps> = ({ snapshot }) => {
   if (!snapshot) return null;
 
   return (
@@ -27,7 +27,7 @@ const JourneysSnapshot: React.FC<JourneysSnapshotProps> = ({ snapshot }) => {
       </h3>
 
       <div className="space-y-4">
-        {snapshot.recentTouchpoints.map((tp) => (
+        {snapshot.recentTouchpoints.map((tp: Touchpoint) => (
           <div key={tp.id} className="group">
             <div className="flex justify-between items-center mb-2">
               <div className="flex items-center gap-3">

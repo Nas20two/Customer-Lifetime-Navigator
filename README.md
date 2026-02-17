@@ -4,7 +4,7 @@
 
 > **AI-powered dashboard for SaaS executives to track unit economics and predict churn.**
 
-**🚀 Live Demo:** <https://customer-lifetime-navigator.vercel.app>
+**🚀 Live Demo:** <https://customer-lifetime-navigator-v2.vercel.app>
 
 ## 🎯 Problem It Solves
 

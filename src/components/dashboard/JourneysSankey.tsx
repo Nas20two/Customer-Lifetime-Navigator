@@ -1,12 +1,12 @@
-import React, { useMemo, useState } from 'react';
+import { useMemo, useState, type FC } from 'react';
 import { JourneyFlow } from '../../types';
-import * as d3 from 'd3';
+// Simple sankey visualization without full d3 dependency
 
 interface JourneysSankeyProps {
   journey?: JourneyFlow;
 }
 
-const JourneysSankey: React.FC<JourneysSankeyProps> = ({ journey }) => {
+const JourneysSankey: FC<JourneysSankeyProps> = ({ journey }) => {
   const [tooltip, setTooltip] = useState<{ x: number; y: number; data: any } | null>(null);
 
   if (!journey) return <div className="h-64 flex items-center justify-center text-slate-500 bg-slate-900/50 rounded-2xl border border-indigo-500/20">No Journey Data</div>;
@@ -40,15 +40,15 @@ const JourneysSankey: React.FC<JourneysSankeyProps> = ({ journey }) => {
       const sourceYCenter = source.y + source.h / 2;
       const targetYCenter = target.y + target.h / 2;
 
-      // The flow should 'shrink' towards the target size
-      const linkGenerator = d3.linkHorizontal()
-        .x((d: any) => d.x)
-        .y((d: any) => d.y);
-        
-      const pathData = linkGenerator({
-        source: { x: source.x + nodeWidth, y: sourceYCenter },
-        target: { x: target.x, y: targetYCenter }
-      });
+      // Create a bezier curve path
+      const startX = source.x + nodeWidth;
+      const startY = sourceYCenter;
+      const endX = target.x;
+      const endY = targetYCenter;
+      const controlX1 = startX + (endX - startX) * 0.5;
+      const controlX2 = startX + (endX - startX) * 0.5;
+      
+      const pathData = `M ${startX} ${startY} C ${controlX1} ${startY}, ${controlX2} ${endY}, ${endX} ${endY}`;
 
       // Calculate midpoint for label positioning
       const midX = (source.x + nodeWidth + target.x) / 2;
@@ -123,7 +123,7 @@ const JourneysSankey: React.FC<JourneysSankeyProps> = ({ journey }) => {
             ))}
 
             {/* Nodes */}
-            {nodes.map((node, i) => (
+            {nodes.map((node) => (
                 <g 
                     key={node.id} 
                     className="group cursor-pointer"

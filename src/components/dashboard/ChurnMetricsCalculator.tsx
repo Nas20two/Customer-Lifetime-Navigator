@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, type FC } from 'react';
 import { CustomerSegment, ChurnSeries } from '../../types';
 import { Calculator, ChevronDown, Info } from 'lucide-react';
 
@@ -9,7 +9,7 @@ interface ChurnMetricsCalculatorProps {
 
 type MetricType = 'customer_churn' | 'gross_mrr_churn' | 'net_mrr_churn';
 
-const ChurnMetricsCalculator: React.FC<ChurnMetricsCalculatorProps> = ({ segment, churnSeries }) => {
+const ChurnMetricsCalculator: FC<ChurnMetricsCalculatorProps> = ({ segment, churnSeries }) => {
   const [selectedMetric, setSelectedMetric] = useState<MetricType>('customer_churn');
 
   // Logic to pull/calculate the data
